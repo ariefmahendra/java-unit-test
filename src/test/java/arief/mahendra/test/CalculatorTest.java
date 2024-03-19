@@ -2,9 +2,13 @@ package arief.mahendra.test;
 
 import arief.mahendra.test.generator.SimpleDisplayNameGenerator;
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.condition.DisabledOnOs;
+import org.junit.jupiter.api.condition.EnabledOnOs;
+import org.junit.jupiter.api.condition.OS;
 import org.opentest4j.TestAbortedException;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assumptions.*;
 
 @DisplayNameGeneration(SimpleDisplayNameGenerator.class)
 public class CalculatorTest {
@@ -56,5 +60,11 @@ public class CalculatorTest {
         if (!"DEV".equals(profile)) {
             throw new TestAbortedException("test dibatalkan karena bukan DEV");
         }
+    }
+
+    @Test
+    public void testAssumptions(){
+        assumeTrue("DEV".equals(System.getenv("PROFILE")));
+        // jika dev, lanjut || jika non-dev, dibatalkan
     }
 }
